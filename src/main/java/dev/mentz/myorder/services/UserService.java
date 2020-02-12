@@ -16,15 +16,6 @@ public class UserService {
 
     public UserResponseDto create(CreateUserDto createUserDto) {
 //        TODO Validar se usuário já existe
-//        validateUserEmail(createUserDto.getEmail());
-        saveUser(UserMapper.toEntity(createUserDto));
-    }
-
-//    private void validateUserEmail(String email) {
-//        return userRepository.findByEmail();
-//    }
-
-    private User saveUser(User user) {
-        return userRepository.save(user);
+        return new UserResponseDto();
     }
 }
