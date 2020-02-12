@@ -41,4 +41,10 @@ public class UserService {
                 .setPassword(createUserDto.getPassword())
                 .setPhone(createUserDto.getPhone());
     }
+
+    public UserResponseDto getById(Integer id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        User user = optionalUser.get();
+        return UserMapper.toResponseDto(user);
+    }
 }

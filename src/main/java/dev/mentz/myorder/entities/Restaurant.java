@@ -5,7 +5,7 @@ import javax.persistence.*;
 //@Entity informa Swagger e Spring que isso é uma entidade
 @Entity
 //@Table permite mudar o nome da tabela no banco de dados
-@Table(name = "RESTAURANTE")
+@Table(name = "RESTAURANT")
 public class Restaurant {
 //    @Id define qual atributo é a chave primária
     @Id

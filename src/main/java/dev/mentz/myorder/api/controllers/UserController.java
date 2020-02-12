@@ -31,4 +31,12 @@ public class UserController {
             @RequestBody @Valid CreateUserDto createUserDto) {
         return userService.create(createUserDto);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserResponseDto getById(
+            @ApiParam(value = "Identificador do usuário a buscar.")
+            @RequestParam @Param("id") Integer id) {
+        return userService.getById(id);
+    }
 }

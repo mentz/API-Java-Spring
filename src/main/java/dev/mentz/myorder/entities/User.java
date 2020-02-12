@@ -3,7 +3,7 @@ package dev.mentz.myorder.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "USUARIO")
+@Table(name = "USER")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
