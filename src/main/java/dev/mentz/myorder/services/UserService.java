@@ -5,6 +5,7 @@ import dev.mentz.myorder.api.dtos.UserResponseDto;
 import dev.mentz.myorder.api.mappers.UserMapper;
 import dev.mentz.myorder.entities.User;
 import dev.mentz.myorder.exceptions.AlreadyExistsException;
+import dev.mentz.myorder.exceptions.NotFoundException;
 import dev.mentz.myorder.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,11 @@ public class UserService {
 
     public UserResponseDto getById(Integer id) {
         Optional<User> optionalUser = userRepository.findById(id);
-        User user = optionalUser.get();
-        return UserMapper.toResponseDto(user);
+
+        if (!optionalUser.isPresent()) {
+            throw new NotFoundException("Não encontrado usuário com id: " + id);
+        }
+
+        return UserMapper.toResponseDto(optionalUser.get());
     }
 }
