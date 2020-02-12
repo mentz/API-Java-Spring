@@ -1,4 +1,4 @@
-package dev.mentz.myorder.api.controllers;
+package dev.mentz.myorder.api;
 
 public class RestPath {
     public static final String BASE_PATH = "/api/v1";

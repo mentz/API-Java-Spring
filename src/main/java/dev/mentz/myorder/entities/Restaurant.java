@@ -27,6 +27,7 @@ public class Restaurant {
 //    pelo IntelliJ usando Builder Pattern. O Builder Pattern
 //    permite instanciar a classe com a seguinte sintaxe:
 //    return new Restaurant().setName().setEmail()[...];
+
     public Integer getId() {
         return id;
     }
