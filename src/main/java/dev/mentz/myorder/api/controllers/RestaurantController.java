@@ -25,7 +25,9 @@ public class RestaurantController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void create(@RequestBody @Valid CreateRestaurantDto createRestaurantDto) {
+    public void create(
+            @ApiParam(value = "Objeto que descreve o restaurante que será criado.")
+            @RequestBody @Valid CreateRestaurantDto createRestaurantDto) {
 //         o @Valid faz a validação dos @NotEmpty definidos no CreateRestaurantDto.java
         restaurantService.createRestaurant(createRestaurantDto);
     }
