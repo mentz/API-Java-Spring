@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.print.attribute.standard.Media;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController("UserController")
 @RequestMapping(RestPath.BASE_PATH + "/user")
@@ -34,9 +35,15 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserResponseDto getById(
+    public UserResponseDto get(
             @ApiParam(value = "Identificador do usuário a buscar.")
             @RequestParam @Param("id") Integer id) {
         return userService.getById(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/list")
+    public List<UserResponseDto> list() {
+        return userService.getAll();
     }
 }

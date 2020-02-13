@@ -32,14 +32,14 @@ public class RestaurantService {
     public RestaurantResponseDto getById(Integer id) {
 //        Optional dá possibilidade de receber um objeto vazio e lidar
 //        com isso de forma graciosa (sem exceções).
-        Optional<Restaurant> optional = restaurantRepository.findById(id);
+        Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(id);
 
-        if (!optional.isPresent()) {
+        if (!optionalRestaurant.isPresent()) {
             throw new NotFoundException("Não encontrado restaurante com id: " + id);
         }
 
-        Restaurant restaurant = optional.get();
-//        optional.orElse(Restaurant objARetornarCasooptionalSejaVazio);
+        Restaurant restaurant = optionalRestaurant.get();
+//        optionalRestaurant.orElse(Restaurant objARetornarCasooptionalSejaVazio);
 
         return new RestaurantResponseDto()
                 .setId(restaurant.getId())

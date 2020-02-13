@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -24,6 +27,35 @@ public class UserService {
         User user = userRepository.save(createUser(createUserDto));
 
         return UserMapper.toResponseDto(user);
+    }
+
+    public UserResponseDto getById(Integer id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if (!optionalUser.isPresent()) {
+            throw new NotFoundException("Não encontrado usuário com id: " + id);
+        }
+
+        return UserMapper.toResponseDto(optionalUser.get());
+    }
+
+//    JAVA 7 e anterior
+//    public List<UserResponseDto> getAll() {
+//        List<User> userList = userRepository.findAll();
+//        List<UserResponseDto> userResponseDtoList = new ArrayList<UserResponseDto>();
+//
+//        for (User user : userList) {
+//            userResponseDtoList.add(UserMapper.toResponseDto(user));
+//        }
+//
+//        return userResponseDtoList;
+//    }
+
+//    JAVA 8 e ModelMapper
+    public List<UserResponseDto> getAll() {
+        List<User> userList = userRepository.findAll();
+
+        return userList.stream().map(UserMapper::toResponseDto).collect(Collectors.toList());
     }
 
     private void validateUserEmail(String email) {
@@ -41,15 +73,5 @@ public class UserService {
                 .setAddress(createUserDto.getAddress())
                 .setPassword(createUserDto.getPassword())
                 .setPhone(createUserDto.getPhone());
-    }
-
-    public UserResponseDto getById(Integer id) {
-        Optional<User> optionalUser = userRepository.findById(id);
-
-        if (!optionalUser.isPresent()) {
-            throw new NotFoundException("Não encontrado usuário com id: " + id);
-        }
-
-        return UserMapper.toResponseDto(optionalUser.get());
     }
 }
