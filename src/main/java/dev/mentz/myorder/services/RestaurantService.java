@@ -47,4 +47,14 @@ public class RestaurantService {
                 .setPhone(restaurant.getPhone())
                 .setEmail(restaurant.getEmail());
     }
+
+    public Restaurant getEntityById(Integer id) {
+        Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(id);
+
+        if (!optionalRestaurant.isPresent()) {
+            throw new NotFoundException("Não encontrado restaurante com id: " + id);
+        }
+
+        return optionalRestaurant.get();
+    }
 }
