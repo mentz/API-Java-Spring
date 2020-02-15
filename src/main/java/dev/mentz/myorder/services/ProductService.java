@@ -10,9 +10,12 @@ import dev.mentz.myorder.api.mappers.UserMapper;
 import dev.mentz.myorder.entities.Product;
 import dev.mentz.myorder.entities.Restaurant;
 import dev.mentz.myorder.entities.User;
+import dev.mentz.myorder.exceptions.NotFoundException;
 import dev.mentz.myorder.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -33,5 +36,18 @@ public class ProductService {
 
         return ProductMapper.toResponseDto(product)
                 .setRestaurant(RestaurantMapper.toResponseDto(restaurant));
+    }
+
+    public Product getEntityById(Integer id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Não encontrado restaurante com id: " + id));
+    }
+
+    public ProductResponseDto createProductResponseDtoFromEntity(Product product) {
+        return new ProductResponseDto()
+                .setName(product.getName())
+                .setValue(product.getValue())
+                .setRestaurant(restaurantService.getDtoFromEntity(product.getRestaurant()))
+                .setId(product.getId());
     }
 }

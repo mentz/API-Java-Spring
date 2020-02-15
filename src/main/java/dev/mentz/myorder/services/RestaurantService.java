@@ -2,13 +2,17 @@ package dev.mentz.myorder.services;
 
 import dev.mentz.myorder.api.dtos.CreateRestaurantDto;
 import dev.mentz.myorder.api.dtos.RestaurantResponseDto;
+import dev.mentz.myorder.api.mappers.RestaurantMapper;
 import dev.mentz.myorder.entities.Restaurant;
 import dev.mentz.myorder.exceptions.NotFoundException;
 import dev.mentz.myorder.repositories.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class RestaurantService {
@@ -48,6 +52,10 @@ public class RestaurantService {
                 .setEmail(restaurant.getEmail());
     }
 
+    public RestaurantResponseDto getDtoFromEntity(Restaurant restaurant) {
+        return RestaurantMapper.toResponseDto(restaurant);
+    }
+
     public Restaurant getEntityById(Integer id) {
         Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(id);
 
@@ -56,5 +64,11 @@ public class RestaurantService {
         }
 
         return optionalRestaurant.get();
+    }
+
+    public List<RestaurantResponseDto> getAll() {
+        List<Restaurant> restaurantList = restaurantRepository.findAll();
+
+        return restaurantList.stream().map(RestaurantMapper::toResponseDto).collect(Collectors.toList());
     }
 }

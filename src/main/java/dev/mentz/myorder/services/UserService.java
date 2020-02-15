@@ -27,6 +27,16 @@ public class UserService {
         return UserMapper.toResponseDto(user);
     }
 
+    public User getEntityById(Integer id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if (!optionalUser.isPresent()) {
+            throw new NotFoundException("Não encontrado usuário com id: " + id);
+        }
+
+        return optionalUser.get();
+    }
+
     public UserResponseDto getById(Integer id) {
         Optional<User> optionalUser = userRepository.findById(id);
 
@@ -54,6 +64,10 @@ public class UserService {
         List<User> userList = userRepository.findAll();
 
         return userList.stream().map(UserMapper::toResponseDto).collect(Collectors.toList());
+    }
+
+    public UserResponseDto getResponseDtoFromEntity(User user) {
+        return UserMapper.toResponseDto(user);
     }
 
     private void validateUserEmail(String email) {

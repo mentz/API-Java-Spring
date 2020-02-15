@@ -3,7 +3,7 @@ package dev.mentz.myorder.api.dtos;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@ApiModel("Objeto de resposta criação de produto")
+@ApiModel("${product.response}")
 public class ProductResponseDto {
     @ApiModelProperty(value = "${product.response.id}")
     private Integer id;
